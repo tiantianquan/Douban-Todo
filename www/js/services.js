@@ -27,7 +27,6 @@ angular.module('DoubanTodoApp')
       //   console.log(data);
       // });
 
-
       $http.jsonp(apiUrl, {
         // responseType :'JSONP',
         params: {
@@ -37,14 +36,22 @@ angular.module('DoubanTodoApp')
           count: count
         }
       }).error(function(data) {
-        // console.log(JSON_DATA);
-
         JSON_DATA.musics.forEach(function(music) {
           music.image = music.image.replace('spic', 'lpic');
         });
-
         callback(JSON_DATA);
-
+      });
+    },
+    MusicGetById: function(doubanID, callback) {
+      var apiUrl = 'https://api.douban.com/v2/music/'+doubanID;
+      $http.jsonp(apiUrl, {
+        params: {
+          callback: 'jsonpCallback',
+        }
+      }).error(function(data) {
+        var musicItem = JSON_DATA;
+        musicItem.image = musicItem.image.replace('spic', 'lpic');
+        callback(musicItem);
       });
     }
   }

@@ -41,6 +41,15 @@ angular.module('DoubanTodoApp', ['ionic'])
         }
       }
     })
+    .state('item',{
+      url:'/item/:id',
+      views:{
+        'item':{
+          templateUrl: 'js/item/item.template.html',
+          controller:'ItemCtrl'
+        }
+      } 
+    })
 
   $urlRouterProvider.otherwise('/home');
 

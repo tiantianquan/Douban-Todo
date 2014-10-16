@@ -1,26 +1,34 @@
 angular.module('DoubanTodoApp')
 
-.controller('HomeCtrl', function($scope, $timeout, $ionicScrollDelegate, DoubanApi) {
-  //标题栏阴影,下滑显示
-  angular.element('ion-content').on('scroll', function() {
-    $scope.$apply(function() {
-      if ($ionicScrollDelegate.getScrollPosition().top != 0) {
-        console.log($ionicScrollDelegate.getScrollPosition());
-        $scope.$root.barShadow = 'bar-header-shadow';
-      } else {
-        $scope.$root.barShadow = '';
-      }
-    })
-  })
+.controller('HomeCtrl', function($scope, $ionicScrollDelegate, $ionicModal, DoubanApi) {
 
   //刷新
   $scope.doRefresh = function() {
-    $timeout(function() {
+    $scope.$on('initEnd', function() {
       $scope.$broadcast('scroll.refreshComplete');
-    }, 1000)
+    });
+    $scope.init();
   };
 
-  DoubanApi.MusicSearch('sonic youth', 10, function(data) {
-    $scope.toDoList = data.musics;
-  })
+  $scope.init = function() {
+    DoubanApi.MusicSearch('sonic youth', 30, function(data) {
+      console.log(data.musics);
+      $scope.toDoList = data.musics;
+      $scope.$broadcast('initEnd');
+    })
+  }
+
+  //从下方弹出页面
+  $ionicModal.fromTemplateUrl('js/item/item.template.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function(id) {
+    $scope.toDoItem = $scope.toDoList.filter(function(toDoItem) {
+      return toDoItem.id == id
+    })[0];
+    $scope.modal.show();
+  };
 })

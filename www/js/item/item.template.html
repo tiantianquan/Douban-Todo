@@ -1,0 +1,15 @@
+<ion-modal-view ng-controller="ItemCtrl" ng-init="init()">
+  <ion-header-bar class="bar bar-header bar-light">
+    <div class="button button-clear" ng-click="closeModal()">
+      <span class="icon ion-close"></span>
+    </div>
+    <h1 class="title">Item Detail</h1>
+  </ion-header-bar>
+  <ion-content>
+    <img class="full-image" src={{toDoItem.image}}>
+    <div class="item">
+      <h1>{{toDoItem.title}}</h1>
+      <p>{{toDoItem.author[0].name}}</p>
+    </div>
+  </ion-content>
+</ion-modal-view>

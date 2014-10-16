@@ -1,13 +1,14 @@
-<ion-view title="Douban Todo">
+<ion-view title="Douban Todo" ng-init="init()">
   <ion-nav-buttons side="right">
     <a class="button button-icon icon ion-plus" href="#/tab/home/search">
     </a>
   </ion-nav-buttons>
 
-  <ion-content class="list app-item-list">
+  <ion-content class="list app-item-list" scroll-show-bar-shadow>
     <ion-refresher on-refresh="doRefresh()">
     </ion-refresher>
-    <a class="item item-thumbnail-left app-item-simple" ng-repeat="toDoItem in toDoList">
+    <a class="item item-thumbnail-left app-item-simple" ng-repeat="toDoItem in toDoList"
+    ng-click="openModal(toDoItem.id)">
       <img src={{toDoItem.image}}>
       <h2>{{toDoItem.title}}</h2>
       <p>{{toDoItem.author[0].name}}</p>
