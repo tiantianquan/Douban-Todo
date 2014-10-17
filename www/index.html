@@ -26,6 +26,7 @@
   <script src="js/directives.js"></script>
   <script src="js/home/home.controller.js"></script>
   <script src="js/item/item.controller.js"></script>
+  <script src="js/search/search.controller.js"></script>
 </head>
 
 <body ng-app="DoubanTodoApp">
@@ -36,13 +37,18 @@
       <ion-content>
       </ion-content>
     </ion-pane> -->
-  <ion-nav-bar class="bar-light nav-title-slide-ios7" >
+  <ion-nav-bar class="bar-light nav-title-slide-ios7 bar-header-shadow">
     <ion-nav-back-button class="button-icon icon  ion-ios7-arrow-back">
       Back
     </ion-nav-back-button>
+    <div class="item-input-inset" ng-hide="'true'">
+      <i class="icon ion-android-search"></i>
+      <input type="search" placeholder="{{placeholder}}" ng-model="search.value">
+      <i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
+    </div>
   </ion-nav-bar>
   <ion-nav-view name="home"></ion-nav-view>
-  <ion-nav-view name="item"></ion-nav-view>
+  <ion-nav-view name="search"></ion-nav-view>
 </body>
 
 </html>

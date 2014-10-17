@@ -41,14 +41,24 @@ angular.module('DoubanTodoApp', ['ionic'])
         }
       }
     })
-    .state('item',{
-      url:'/item/:id',
+    // .state('item',{
+    //   url:'/item/:id',
+    //   views:{
+    //     'item':{
+    //       templateUrl: 'js/item/item.template.html',
+    //       controller:'ItemCtrl'
+    //     }
+    //   } 
+    // })
+
+    .state('search',{
+      url:'/search',
       views:{
-        'item':{
-          templateUrl: 'js/item/item.template.html',
-          controller:'ItemCtrl'
+        'home':{
+          templateUrl:'js/search/search.template.html',
+          controller:'SearchCtrl'
         }
-      } 
+      }
     })
 
   $urlRouterProvider.otherwise('/home');

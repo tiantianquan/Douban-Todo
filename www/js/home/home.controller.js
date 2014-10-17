@@ -1,7 +1,6 @@
 angular.module('DoubanTodoApp')
 
-.controller('HomeCtrl', function($scope, $ionicScrollDelegate, $ionicModal, DoubanApi) {
-
+.controller('HomeCtrl', function($scope, $ionicModal, DoubanApi) {
   //刷新
   $scope.doRefresh = function() {
     $scope.$on('initEnd', function() {
@@ -12,7 +11,6 @@ angular.module('DoubanTodoApp')
 
   $scope.init = function() {
     DoubanApi.MusicSearch('sonic youth', 30, function(data) {
-      console.log(data.musics);
       $scope.toDoList = data.musics;
       $scope.$broadcast('initEnd');
     })
