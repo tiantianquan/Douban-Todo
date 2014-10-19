@@ -1,6 +1,6 @@
 angular.module('DoubanTodoApp')
 
-.controller('SearchCtrl', function($scope, $timeout, $ionicNavBarDelegate, DoubanApi) {
+.controller('SearchCtrl', function($scope, $timeout, TodoItem, DoubanApi) {
   //设置搜索框焦点 bug:ios 下只有第一次找到焦点
   var searchInput;
   $scope.init = function() {
@@ -20,6 +20,14 @@ angular.module('DoubanTodoApp')
       })
       searchInput[0].focus();
     }, 500);
+  }
+
+  $scope.addToTodoList = function(searchItem) {
+    TodoItem.Add(searchItem, function(todoItem) {
+        searchItem.addSuccess = true;
+    }, function(todoItem, error) {
+      console.log(error, searchItem);
+    });
   }
 
 

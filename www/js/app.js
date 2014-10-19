@@ -51,22 +51,30 @@ angular.module('DoubanTodoApp', ['ionic'])
     //   } 
     // })
 
-    .state('search',{
-      url:'/search',
-      views:{
-        'home':{
-          templateUrl:'js/search/search.template.html',
-          controller:'SearchCtrl'
-        }
+  .state('search', {
+    url: '/search',
+    views: {
+      'home': {
+        templateUrl: 'js/search/search.template.html',
+        controller: 'SearchCtrl'
       }
-    })
+    }
+  })
 
   $urlRouterProvider.otherwise('/home');
 
-}).
+})
 
-config(function(){
+//登陆默认用户tiantianquan
+.run(function() {
   AV.initialize(AVOS_ID, AVOS_KEY);
+  AV.User.logIn('tiantianquan', 'douban_1234', {
+    success: function(user) {
+    },
+    error: function(user, error) {
+      alert('无法登陆');
+    }
+  });
 })
 
 AVOS_ID = 'bg80oxz6ls1pmcgs1nihpsnmdystfzsxlgynwq7fqtm4v405';

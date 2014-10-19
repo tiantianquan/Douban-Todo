@@ -2,6 +2,29 @@ angular.module('DoubanTodoApp')
 
 //TodoItem相关
 .factory('TodoItem', function() {
+  // 创建AV.Object子类.
+  var AV_TodoItem = AV.Object.extend('TodoItem');
+
+  return {
+    Add: function(doubanItem, fnSuccess, fnError) {
+      var todoItem = new AV_TodoItem();
+      todoItem.set('doubanItemID', parseInt(doubanItem.id));
+      todoItem.set('doubanAPIData', doubanItem);
+      todoItem.set('user', AV.User.current());
+      todoItem.save(null, {
+        success: fnSuccess,
+        error: fnError
+      });
+    },
+    GetCurrentUserItem: function(callback) {
+      var query = new AV.Query(AV_TodoItem);
+      query.equalTo('user',AV.User.current());
+      query.find({
+        success:callback
+      })
+    }
+  }
+
 
 })
 
@@ -38,12 +61,13 @@ angular.module('DoubanTodoApp')
       }).error(function(data) {
         JSON_DATA.musics.forEach(function(music) {
           music.image = music.image.replace('spic', 'lpic');
+          music.addSuccess = false;
         });
         callback(JSON_DATA);
       });
     },
     MusicGetById: function(doubanID, callback) {
-      var apiUrl = 'https://api.douban.com/v2/music/'+doubanID;
+      var apiUrl = 'https://api.douban.com/v2/music/' + doubanID;
       $http.jsonp(apiUrl, {
         params: {
           callback: 'jsonpCallback',
@@ -56,6 +80,8 @@ angular.module('DoubanTodoApp')
     }
   }
 })
+
+
 
 function jsonpCallback(data) {
   JSON_DATA = data;

@@ -11,16 +11,18 @@
     </div>
 
   </ion-nav-buttons> -->
-<!--   <ion-header-bar class="item-input-inset">
+  <!--   <ion-header-bar class="item-input-inset">
     <ion-search  placeholder="Search a user"></ion-search>
   </ion-header-bar> -->
 
   <ion-content class="app-item-list" scroll-show-bar-shadow>
-    <a class="item item-thumbnail-left app-item-simple" ng-repeat="searchItem in searchList">
+    <div class="item item-thumbnail-left search-item-simple" ng-repeat="searchItem in searchList">
       <img src={{searchItem.image}}>
-      <h2>{{searchItem.title}}</h2>
-      <p>{{searchItem.author[0].name}}</p>
-    </a>
-
+      <div class="description">
+        <h2>{{searchItem.title}}</h2>
+        <p>{{searchItem.author[0].name}}</p>
+      </div>
+      <div class="button button-icon icon ion-ios7-plus-empty item-add-button" ng-click="addToTodoList({{searchItem}})" ng-hide="searchItem.addSuccess"></div>
+    </div>
   </ion-content>
 </ion-view>

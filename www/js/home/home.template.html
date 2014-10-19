@@ -7,11 +7,12 @@
   <ion-content class="app-item-list" scroll-show-bar-shadow>
     <ion-refresher on-refresh="doRefresh()">
     </ion-refresher>
-    <a class="item item-thumbnail-left app-item-simple" ng-repeat="toDoItem in toDoList"
-    ng-click="openModal(toDoItem.id)">
-      <img src={{toDoItem.image}}>
-      <h2>{{toDoItem.title}}</h2>
-      <p>{{toDoItem.author[0].name}}</p>
-    </a>
+    <div class="item item-thumbnail-left app-item-simple" ng-repeat="todoItem in todoList" ng-click="openModal(todoItem.doubanData.id)">
+      <img src={{todoItem.doubanData.image}}>
+      <div class="description">
+        <h2>{{todoItem.doubanData.title}}</h2>
+        <p>{{todoItem.doubanData.author[0].name}}</p>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

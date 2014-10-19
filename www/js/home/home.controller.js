@@ -1,6 +1,6 @@
 angular.module('DoubanTodoApp')
 
-.controller('HomeCtrl', function($scope, $ionicModal, DoubanApi) {
+.controller('HomeCtrl', function($scope, $ionicModal, TodoItem,DoubanApi) {
   //刷新
   $scope.doRefresh = function() {
     $scope.$on('initEnd', function() {
@@ -10,10 +10,18 @@ angular.module('DoubanTodoApp')
   };
 
   $scope.init = function() {
-    DoubanApi.MusicSearch('sonic youth', 30, function(data) {
-      $scope.toDoList = data.musics;
+    // DoubanApi.MusicSearch('sonic youth', 30, function(data) {
+    //   $scope.toDoList = data.musics;
+    //   $scope.$broadcast('initEnd');
+    // })
+    TodoItem.GetCurrentUserItem(function(todoItems) {
+      $scope.todoList = todoItems;
+      $scope.todoList.forEach(function(data){
+        data.doubanData = data.get('doubanAPIData');
+      })
       $scope.$broadcast('initEnd');
     })
+
   }
 
   //从下方弹出页面
@@ -24,10 +32,10 @@ angular.module('DoubanTodoApp')
     $scope.modal = modal;
   });
   $scope.openModal = function(id) {
-    $scope.toDoItem = $scope.toDoList.filter(function(toDoItem) {
-      return toDoItem.id == id
+    $scope.todoItem = $scope.todoList.filter(function(toDoItem) {
+      return toDoItem.doubanData.id == id
     })[0];
     $scope.modal.show();
-    
+
   };
 })

@@ -50,3 +50,15 @@ ion-nav-back-button {
 .search-blur {
   -webkit-filter: blur(2px);
 }
+.item-add-button {
+  position: absolute;
+  right: 0;
+  top: 0px;
+  height: 100px;
+  border-left: rgb(221, 221, 221) solid 1px;
+  border-width: 0px 1px;
+  padding-top:30px;
+}
+.search-item-simple {
+  padding-right: 34px;
+}
