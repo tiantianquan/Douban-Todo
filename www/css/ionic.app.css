@@ -8889,10 +8889,9 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   transition: none !important; }
 
 @font-face {
-  font-family: "Ionicons";
+  font-family: "Open Sans";
   src: url("../fonts/Open_Sans/OpenSans-Regular.ttf");
-  font-weight: normal;
-  font-style: normal; }
+  src: url("../fonts/Open_Sans/OpenSans-Light.ttf"); }
 p, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .title {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important; }
 
