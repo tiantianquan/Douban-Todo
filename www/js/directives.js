@@ -66,23 +66,22 @@ angular.module('DoubanTodoApp')
 .directive('searchNavBar', function() {
   return {
     restrict: 'A',
-    scope: {},
     link: function(scope, element, attr) {
       var ionNavBar = $('ion-nav-bar');
       if (ionNavBar.count = 0)
         return;
       ionNavBar.children('.title').hide();
-      ionNavBar.append('<div class="item-input-inset">' +
-        '<i class="icon ion-android-search"></i>' +
-        '<input type="search" placeholder="{{placeholder}}" ng-model="search.value">' +
-        '<i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
-        '</div>')
+      ionNavBar.append('<div class="item-input-inset search-item-input-inset">' +
+        '<label class="item-input-wrapper">' +
+        '<i class="icon ion-ios7-search placeholder-icon"></i>' +
+        '<input type="search" placeholder="Search">' +
+        '</label>' +
+        '</div>');
+
       scope.$on('$destroy', function() {
         ionNavBar.children('.title').show();
         ionNavBar.children().remove('.item-input-inset')
       })
-
     }
-
   }
 })

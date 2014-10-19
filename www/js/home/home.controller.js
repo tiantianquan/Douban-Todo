@@ -28,5 +28,6 @@ angular.module('DoubanTodoApp')
       return toDoItem.id == id
     })[0];
     $scope.modal.show();
+    
   };
 })

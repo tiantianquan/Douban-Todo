@@ -16,7 +16,11 @@
   </ion-header-bar> -->
 
   <ion-content class="app-item-list" scroll-show-bar-shadow>
-
+    <a class="item item-thumbnail-left app-item-simple" ng-repeat="searchItem in searchList">
+      <img src={{searchItem.image}}>
+      <h2>{{searchItem.title}}</h2>
+      <p>{{searchItem.author[0].name}}</p>
+    </a>
 
   </ion-content>
 </ion-view>

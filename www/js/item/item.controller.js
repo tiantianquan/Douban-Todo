@@ -1,7 +1,9 @@
 angular.module('DoubanTodoApp')
 
-.controller('ItemCtrl', function($scope, $stateParams, DoubanApi) {
+.controller('ItemCtrl', function($scope, DoubanApi) {
+
   $scope.closeModal = function() {
+    console.log($scope);
     $scope.modal.hide();
   };
   //Cleanup the modal when we're done with it!
