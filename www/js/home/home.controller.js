@@ -1,6 +1,6 @@
 angular.module('DoubanTodoApp')
 
-.controller('HomeCtrl', function($scope, $ionicModal, TodoItem,DoubanApi) {
+.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup, TodoItem, DoubanApi) {
   //刷新
   $scope.doRefresh = function() {
     $scope.$on('initEnd', function() {
@@ -15,11 +15,13 @@ angular.module('DoubanTodoApp')
     //   $scope.$broadcast('initEnd');
     // })
     TodoItem.GetCurrentUserItem(function(todoItems) {
-      $scope.todoList = todoItems;
-      $scope.todoList.forEach(function(data){
-        data.doubanData = data.get('doubanAPIData');
-      })
-      $scope.$broadcast('initEnd');
+      $scope.$apply(function() {
+        $scope.todoList = todoItems;
+        $scope.todoList.forEach(function(data) {
+          data.doubanData = data.get('doubanAPIData');
+        })
+        $scope.$broadcast('initEnd');
+      });
     })
 
   }
@@ -36,6 +38,24 @@ angular.module('DoubanTodoApp')
       return toDoItem.doubanData.id == id
     })[0];
     $scope.modal.show();
-
   };
+
+  //popup window
+  $scope.showItemMenu = function(item) {
+    $scope.popupMenu = $ionicPopup.show({
+      templateUrl: 'js/home/homePopupMenu.template.html',
+      scope: $scope,
+    });
+    $scope.popupMenu.item = item;
+  };
+})
+
+.controller('HomePopupCtrl', function($scope) {
+  angular.element('.popup-head').remove();
+  angular.element('.popup-buttons').remove();
+
+  $scope.deleteItem = function(){
+    $scope.todoList.splice($scope.todoList.indexOf($scope.popupMenu.item),1);
+    $scope.popupMenu.close();
+  }
 })

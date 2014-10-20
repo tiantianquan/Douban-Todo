@@ -18,9 +18,9 @@ angular.module('DoubanTodoApp')
     },
     GetCurrentUserItem: function(callback) {
       var query = new AV.Query(AV_TodoItem);
-      query.equalTo('user',AV.User.current());
+      query.equalTo('user', AV.User.current());
       query.find({
-        success:callback
+        success: callback
       })
     }
   }
@@ -80,8 +80,6 @@ angular.module('DoubanTodoApp')
     }
   }
 })
-
-
 
 function jsonpCallback(data) {
   JSON_DATA = data;
