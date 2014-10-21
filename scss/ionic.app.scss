@@ -24,7 +24,6 @@ $ionicons-font-path:"../lib/ionic/fonts" !default;
   font-family: "Open Sans";
   src: url("../fonts/Open_Sans/OpenSans-Regular.ttf");
   src: url("../fonts/Open_Sans/OpenSans-Light.ttf");
-
 }
 p, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .title {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
@@ -57,9 +56,17 @@ ion-nav-back-button {
   height: 100px;
   border-left: rgb(221, 221, 221) solid 1px;
   border-width: 0px 1px;
-  padding-top:30px;
+  padding-top: 30px;
 }
 .search-item-simple {
   padding-right: 34px;
 }
-
+.popup-menu-modal {
+  top: 40%;
+  right: 20%;
+  bottom: 40%;
+  left: 20%;
+  overflow: visible;
+  min-height: 0;
+  width: 60%;
+}

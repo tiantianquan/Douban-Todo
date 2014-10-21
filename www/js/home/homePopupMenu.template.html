@@ -1,8 +1,7 @@
-<div class="popup-wrapper" ng-controller="HomePopupCtrl">
-  <div class="item" ng-click="deleteItem()">
-    Delete
-  </div>
-  <div class="item">
-    Delete
-  </div>
-</div>
+<ion-modal-view ng-controller="HomePopupCtrl" ng-init="init()" class="popup-menu-modal">
+  <ion-content>
+    <div class="item" ng-click="deleteItem()">
+      <p>Delete</p>
+    </div>
+  </ion-content>
+</ion-modal-view>

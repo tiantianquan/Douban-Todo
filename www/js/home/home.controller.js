@@ -9,6 +9,7 @@ angular.module('DoubanTodoApp')
     $scope.init();
   };
 
+  //初始化
   $scope.init = function() {
     // DoubanApi.MusicSearch('sonic youth', 30, function(data) {
     //   $scope.toDoList = data.musics;
@@ -16,7 +17,9 @@ angular.module('DoubanTodoApp')
     // })
     TodoItem.GetCurrentUserItem(function(todoItems) {
       $scope.$apply(function() {
-        $scope.todoList = todoItems;
+        $scope.todoList = todoItems.sort(function(a, b) {
+          return Date.parse(a.createdAt) - Date.parse(b.createdAt);
+        });
         $scope.todoList.forEach(function(data) {
           data.doubanData = data.get('doubanAPIData');
         })
@@ -26,36 +29,52 @@ angular.module('DoubanTodoApp')
 
   }
 
-  //从下方弹出页面
+  //从下方弹出item页面
   $ionicModal.fromTemplateUrl('js/item/item.template.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  $scope.openModal = function(id) {
+  $scope.openItemModal = function(id) {
     $scope.todoItem = $scope.todoList.filter(function(toDoItem) {
       return toDoItem.doubanData.id == id
     })[0];
     $scope.modal.show();
   };
 
-  //popup window
-  $scope.showItemMenu = function(item) {
-    $scope.popupMenu = $ionicPopup.show({
-      templateUrl: 'js/home/homePopupMenu.template.html',
-      scope: $scope,
-    });
+  //popupMenu
+  $ionicModal.fromTemplateUrl('js/home/homePopupMenu.template.html', {
+    scope: $scope,
+    animation: 'fade-in'
+  }).then(function(modal) {
+    $scope.popupMenu = modal;
+  });
+  $scope.openItemMenu = function(item) {
     $scope.popupMenu.item = item;
+    $scope.popupMenu.show();
   };
 })
 
-.controller('HomePopupCtrl', function($scope) {
-  angular.element('.popup-head').remove();
-  angular.element('.popup-buttons').remove();
+.controller('HomePopupCtrl', function($scope, TodoItem) {
 
-  $scope.deleteItem = function(){
-    $scope.todoList.splice($scope.todoList.indexOf($scope.popupMenu.item),1);
-    $scope.popupMenu.close();
+  $scope.closeItemMenu = function() {
+    $scope.popupMenu.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.popupMenu.remove();
+  });
+
+  $scope.init = function() {}
+
+  //删除条目
+  $scope.deleteItem = function() {
+    TodoItem.DeleteItem($scope.popupMenu.item, function(data) {
+      $scope.todoList.splice($scope.todoList.indexOf($scope.popupMenu.item), 1);
+      $scope.popupMenu.hide();
+    }, function(data, error) {
+      alert(error);
+    });
   }
 })

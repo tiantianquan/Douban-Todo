@@ -24,5 +24,9 @@
       </div>
       <div class="button button-icon icon ion-ios7-plus-empty item-add-button" ng-click="addToTodoList({{searchItem}})" ng-hide="searchItem.addSuccess"></div>
     </div>
+
+    <div ng-hide="isZero()">
+      <p>无结果</p>
+    </div>
   </ion-content>
 </ion-view>

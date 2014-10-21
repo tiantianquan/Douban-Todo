@@ -22,7 +22,27 @@ angular.module('DoubanTodoApp')
       query.find({
         success: callback
       })
-    }
+    },
+    GetItemById: function(todoItem, fnSuccess, fnError) {
+      var query = new AV.Query(AV_TodoItem);
+      query.get(todoItem.objectId, {
+        success: fnSuccess,
+        error: fnError
+      });
+    },
+    DeleteItem: function(todoItem, fnSuccess, fnError) {
+      this.GetItemById(todoItem, function(data) {
+        var deleteItem = data;
+
+        deleteItem.destroy({
+          success: fnSuccess,
+          error: fnError,
+        }, function(data, error) {
+          alert(error);
+        });
+
+      })
+    },
   }
 
 
@@ -78,6 +98,8 @@ angular.module('DoubanTodoApp')
         callback(musicItem);
       });
     }
+
+
   }
 })
 
