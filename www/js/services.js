@@ -103,6 +103,19 @@ angular.module('DoubanTodoApp')
   }
 })
 
+.factory('ProcessBarDelegate', function($rootScope, $timeout) {
+  return {
+    start: function() {
+      $timeout(function() {
+        $rootScope.$broadcast('processBar.start');
+      }, 1);
+    },
+    end: function() {
+        $rootScope.$broadcast('processBar.end');
+    }
+  }
+})
+
 function jsonpCallback(data) {
   JSON_DATA = data;
 }

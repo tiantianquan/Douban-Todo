@@ -1,0 +1,8 @@
+diff a/www/js/search/search.controller.js b/www/js/search/search.controller.js	(rejected hunks)
+@@ -1,6 +1,5 @@
+ angular.module('DoubanTodoApp')
+ 
+-.controller('SearchCtrl', function($scope, $timeout, TodoItem, DoubanApi) {
+ .controller('SearchCtrl', function($scope, $timeout, TodoItem,ProcessBarDelegate, DoubanApi) {
+   //è®¾ç½®æœç´¢æ¡†ç„¦ç‚¹ bug:ios ä¸‹åªæœ‰ç¬¬ä¸€æ¬¡æ‰¾åˆ°ç„¦ç‚¹
+   var searchInput;

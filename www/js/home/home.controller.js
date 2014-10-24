@@ -1,10 +1,12 @@
 angular.module('DoubanTodoApp')
 
-.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup, TodoItem, DoubanApi) {
+.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup,ProcessBarDelegate, TodoItem, DoubanApi) {
   //刷新
   $scope.doRefresh = function() {
+    ProcessBarDelegate.start();
     $scope.$on('initEnd', function() {
       $scope.$broadcast('scroll.refreshComplete');
+      ProcessBarDelegate.end();
     });
     $scope.init();
   };

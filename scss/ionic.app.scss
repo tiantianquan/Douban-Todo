@@ -70,3 +70,20 @@ ion-nav-back-button {
   min-height: 0;
   width: 60%;
 }
+
+.process-bar {
+  height: 5px;
+  background-color: lighten(blue,20%);
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  opacity:0.5;
+}
+.process-bar.process-bar-start {
+  width: 0px;
+  transition: width 2s linear;
+}
+
+.process-bar.process-bar-end {
+  transition: width 0.5s linear;
+}

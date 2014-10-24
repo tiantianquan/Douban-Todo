@@ -85,3 +85,58 @@ angular.module('DoubanTodoApp')
     }
   }
 })
+
+.directive('processBar', function($timeout, $rootScope) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attr) {
+      var processInterval;
+      var headerBarEl = element;
+      if (element[0].tagName !== 'ION-HEADER-BAR' && element[0].tagName !== 'ION-NAV-BAR')
+        return;
+      var processBarEl = angular.element('<div class="process-bar"><div>');
+      processBarEl.css({
+        'top': headerBarEl[0].offsetHeight + 'px'
+      });
+      headerBarEl.append(processBarEl);
+
+      $rootScope.$on('processBar.start', function() {
+        // var riseWidth = headerBarEl[0].offsetWidth / 20;
+        // var processBarWidth = 0;
+        // processInterval = setInterval(function() {
+        //   processBarEl.css({
+        //     'width': processBarWidth + 'px',
+        //     'top': headerBarEl[0].offsetHeight + 'px'
+        //   });
+        //   processBarWidth += riseWidth;
+        // }, 200)
+        if(headerBarEl.children('.process-bar'))
+          headerBarEl.children('.process-bar').remove();
+
+        headerBarEl.append(processBarEl);
+        processBarEl.addClass('process-bar-start');
+        processBarEl.css({
+          'width': headerBarEl[0].offsetWidth * 3 / 4 + 'px',
+        });
+      })
+
+      $rootScope.$on('processBar.end', function() {
+        // clearInterval(processInterval);
+        processBarEl.removeClass('process-bar-start');
+        processBarEl.addClass('process-bar-end');
+        processBarEl.css({
+          'width': headerBarEl[0].offsetWidth + 'px',
+        });
+        //bar消失
+        $timeout(function() {
+          processBarEl[0].style.width = 0;
+
+          processBarEl.removeClass('process-bar-end');
+          processBarEl.removeClass('process-bar-start');
+          // processBarEl.css('opacity', 1);
+          processBarEl.remove();
+        }, 600)
+      })
+    }
+  }
+})

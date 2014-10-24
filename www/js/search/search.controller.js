@@ -1,6 +1,6 @@
 angular.module('DoubanTodoApp')
 
-.controller('SearchCtrl', function($scope, $timeout, TodoItem, DoubanApi) {
+.controller('SearchCtrl', function($scope, $timeout,ProcessBarDelegate, TodoItem, DoubanApi) {
   //设置搜索框焦点 bug:ios 下只有第一次找到焦点
   var searchInput;
   $scope.searchList;
@@ -13,12 +13,14 @@ angular.module('DoubanTodoApp')
         $('ion-content').addClass('search-blur');
       })
       searchInput.blur(function() {
+        ProcessBarDelegate.start();
         $('ion-nav-back-button').show('fast');
         $('ion-content').removeClass('search-blur');
         //如果搜索框有值则不进行搜素
         if (!!searchInput.val()) {
           DoubanApi.MusicSearch(searchInput.val(), 30, function(data) {
             $scope.searchList = data.musics;
+            ProcessBarDelegate.end();
           })
         }
       })
