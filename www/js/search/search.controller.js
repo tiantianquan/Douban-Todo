@@ -13,11 +13,12 @@ angular.module('DoubanTodoApp')
         $('ion-content').addClass('search-blur');
       })
       searchInput.blur(function() {
-        ProcessBarDelegate.start();
+        
         $('ion-nav-back-button').show('fast');
         $('ion-content').removeClass('search-blur');
         //如果搜索框有值则不进行搜素
         if (!!searchInput.val()) {
+          ProcessBarDelegate.start();
           DoubanApi.MusicSearch(searchInput.val(), 30, function(data) {
             $scope.searchList = data.musics;
             ProcessBarDelegate.end();
@@ -31,6 +32,7 @@ angular.module('DoubanTodoApp')
   $scope.addToTodoList = function(searchItem) {
     TodoItem.Add(searchItem, function(todoItem) {
       searchItem.addSuccess = true;
+
     }, function(todoItem, error) {
       console.log(error, searchItem);
     });
