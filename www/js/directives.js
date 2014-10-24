@@ -86,31 +86,23 @@ angular.module('DoubanTodoApp')
   }
 })
 
+
+//进度条
 .directive('processBar', function($timeout, $rootScope) {
   return {
     restrict: 'A',
     link: function(scope, element, attr) {
-      var processInterval;
       var headerBarEl = element;
       if (element[0].tagName !== 'ION-HEADER-BAR' && element[0].tagName !== 'ION-NAV-BAR')
         return;
       var processBarEl = angular.element('<div class="process-bar"><div>');
       processBarEl.css({
-        'top': headerBarEl[0].offsetHeight + 'px'
+        // 'top': headerBarEl[0].offsetHeight + 'px'
       });
       headerBarEl.append(processBarEl);
 
       $rootScope.$on('processBar.start', function() {
-        // var riseWidth = headerBarEl[0].offsetWidth / 20;
-        // var processBarWidth = 0;
-        // processInterval = setInterval(function() {
-        //   processBarEl.css({
-        //     'width': processBarWidth + 'px',
-        //     'top': headerBarEl[0].offsetHeight + 'px'
-        //   });
-        //   processBarWidth += riseWidth;
-        // }, 200)
-        if(headerBarEl.children('.process-bar'))
+        if (headerBarEl.children('.process-bar'))
           headerBarEl.children('.process-bar').remove();
 
         headerBarEl.append(processBarEl);
@@ -136,6 +128,34 @@ angular.module('DoubanTodoApp')
           // processBarEl.css('opacity', 1);
           processBarEl.remove();
         }, 600)
+      })
+    }
+  }
+})
+
+.directive('flashBar', function($rootScope, $timeout) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attr) {
+      var headerBarEl = element;
+      if (element[0].tagName !== 'ION-HEADER-BAR' && element[0].tagName !== 'ION-NAV-BAR')
+        return;
+      var flashBarEl = angular.element('<div class="flash-bar"></div>');
+      flashBarEl.css({
+        'top': parseInt(headerBarEl[0].offsetHeight) - 30 + 'px',
+        'width': headerBarEl[0].offsetWidth + 'px'
+      });
+      headerBarEl.append(flashBarEl);
+
+      $rootScope.$on('flashBar.show', function() {
+        flashBarEl.css({
+          'top': headerBarEl[0].offsetHeight + 'px',
+        });
+        $timeout(function() {
+          flashBarEl.css({
+            'top': parseInt(headerBarEl[0].offsetHeight) - 30 + 'px',
+          });
+        }, 2000)
       })
     }
   }

@@ -76,8 +76,10 @@ ion-nav-back-button {
   background-color: lighten(blue,20%);
   position: absolute;
   overflow: hidden;
+  top:0;
   left: 0;
   opacity:0.5;
+  z-index: 10;
 }
 .process-bar.process-bar-start {
   width: 0px;
@@ -88,7 +90,12 @@ ion-nav-back-button {
   transition: width 0.5s linear;
 }
 
-.full-image{
-  // border-radius: 50%;
-
+.flash-bar{
+  height: 30px;
+  background-color: lighten(red,20%);
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  opacity:0.5;
+  transition: top 0.5s;
 }

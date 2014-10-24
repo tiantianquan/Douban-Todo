@@ -7,6 +7,7 @@ angular.module('DoubanTodoApp')
     $scope.$on('initEnd', function() {
       $scope.$broadcast('scroll.refreshComplete');
       ProcessBarDelegate.end();
+      $scope.$emit('flashBar.show');
     });
     $scope.init();
   };

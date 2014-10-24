@@ -8990,8 +8990,10 @@ ion-nav-back-button {
   background-color: #6666ff;
   position: absolute;
   overflow: hidden;
+  top: 0;
   left: 0;
-  opacity: 0.5; }
+  opacity: 0.5;
+  z-index: 10; }
 
 .process-bar.process-bar-start {
   width: 0px;
@@ -8999,3 +9001,12 @@ ion-nav-back-button {
 
 .process-bar.process-bar-end {
   transition: width 0.5s linear; }
+
+.flash-bar {
+  height: 30px;
+  background-color: #ff6666;
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  opacity: 0.5;
+  transition: top 0.5s; }
