@@ -111,8 +111,19 @@ angular.module('DoubanTodoApp')
       }, 1);
     },
     end: function() {
-        $rootScope.$broadcast('processBar.end');
+      $rootScope.$broadcast('processBar.end');
     }
+  }
+})
+
+.factory('FlashBarDelegate', function($rootScope, $timeout) {
+  return {
+    show: function() {
+      $timeout(function() {
+        $rootScope.$broadcast('flashBar.show');
+      }, 1);
+    },
+    barText:''
   }
 })
 

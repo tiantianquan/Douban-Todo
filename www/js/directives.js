@@ -133,30 +133,52 @@ angular.module('DoubanTodoApp')
   }
 })
 
-.directive('flashBar', function($rootScope, $timeout) {
+.directive('flashBar', function($rootScope, $timeout, FlashBarDelegate) {
   return {
     restrict: 'A',
     link: function(scope, element, attr) {
       var headerBarEl = element;
       if (element[0].tagName !== 'ION-HEADER-BAR' && element[0].tagName !== 'ION-NAV-BAR')
         return;
-      var flashBarEl = angular.element('<div class="flash-bar"></div>');
-      flashBarEl.css({
-        'top': parseInt(headerBarEl[0].offsetHeight) - 30 + 'px',
-        'width': headerBarEl[0].offsetWidth + 'px'
-      });
-      headerBarEl.append(flashBarEl);
 
-      $rootScope.$on('flashBar.show', function() {
+      var createEl = function() {
+        var el = angular.element('<div class="flash-bar"><p></p></div>');
+        el.startTop = parseInt(headerBarEl[0].offsetHeight) - 30;
+        el.fannelTop = headerBarEl[0].offsetHeight;
+        el.css({
+          'top': el.startTop + 'px',
+          'width': headerBarEl[0].offsetWidth + 'px'
+        });
+        return el;
+      }
+
+      //新建元素
+      var flashBarEl = createEl();
+      //注入
+      headerBarEl.after(flashBarEl);
+      //触发事件
+      // $rootScope.$on('flashBar.show', function() {
+      //   flashBarEl.children('p').text(FlashBarDelegate.barText);
+      //   flashBarEl.css({
+      //     'top': flashBarEl.fannelTop + 'px',
+      //   });
+      //   $timeout(function() {
+      //     flashBarEl.css({
+      //       'top': flashBarEl.startTop + 'px',
+      //     });
+      //   }, 2000);
+      // })
+      FlashBarDelegate.show = function() {
+        flashBarEl.children('p').text(FlashBarDelegate.barText);
         flashBarEl.css({
-          'top': headerBarEl[0].offsetHeight + 'px',
+          'top': flashBarEl.fannelTop + 'px',
         });
         $timeout(function() {
           flashBarEl.css({
-            'top': parseInt(headerBarEl[0].offsetHeight) - 30 + 'px',
+            'top': flashBarEl.startTop + 'px',
           });
-        }, 2000)
-      })
+        }, 2000);
+      }
     }
   }
 })

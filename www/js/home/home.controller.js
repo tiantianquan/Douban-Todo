@@ -1,14 +1,14 @@
 angular.module('DoubanTodoApp')
 
-.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup,ProcessBarDelegate, TodoItem, DoubanApi) {
+.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup, ProcessBarDelegate, FlashBarDelegate, TodoItem, DoubanApi) {
+  $scope.$on('initEnd', function() {
+    $scope.$broadcast('scroll.refreshComplete');
+    ProcessBarDelegate.end();
+    FlashBarDelegate.show();
+  });
   //刷新
   $scope.doRefresh = function() {
     ProcessBarDelegate.start();
-    $scope.$on('initEnd', function() {
-      $scope.$broadcast('scroll.refreshComplete');
-      ProcessBarDelegate.end();
-      $scope.$emit('flashBar.show');
-    });
     $scope.init();
   };
 
@@ -26,6 +26,7 @@ angular.module('DoubanTodoApp')
         $scope.todoList.forEach(function(data) {
           data.doubanData = data.get('doubanAPIData');
         })
+        FlashBarDelegate.barText = '已加载' + $scope.todoList.length + '条';
         $scope.$broadcast('initEnd');
       });
     })
