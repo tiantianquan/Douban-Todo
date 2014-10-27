@@ -8,7 +8,8 @@
     <ion-refresher on-refresh="doRefresh()">
     </ion-refresher>
     <div class="item item-thumbnail-left app-item-simple" ng-repeat="todoItem in todoList" ng-click="openItemModal(todoItem.doubanData.id)" on-hold="openItemMenu(todoItem)">
-      <img src={{todoItem.doubanData.image}}>
+      
+      <div id="div1" class="img-convert"><img src={{todoItem.doubanData.image}}></img></div>
       <div class="description">
         <h2>{{todoItem.doubanData.title}}</h2>
         <p>{{todoItem.doubanData.author[0].name}}</p>
