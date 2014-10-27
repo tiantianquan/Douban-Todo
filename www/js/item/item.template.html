@@ -6,7 +6,15 @@
     <h1 class="title">Item Detail</h1>
   </ion-header-bar>
   <ion-content>
-    <img class="full-image" src={{todoItem.doubanData.image}}>
+    <!--     <div class="wrap">
+      <div class="img-convert-full">
+        <img class="full-image" src={{todoItem.doubanData.image}}>
+      </div>
+    </div> -->
+    <div class="img-convert-full">
+      <img class="full-image" src={{todoItem.doubanData.image}}>
+      <div class="svg-wraper"></div>
+    </div>
     <div class="item">
       <h1>{{todoItem.doubanData.title}}</h1>
       <p>{{todoItem.doubanData.author[0].name}}</p>

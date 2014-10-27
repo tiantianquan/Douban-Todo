@@ -5,6 +5,7 @@ angular.module('DoubanTodoApp')
     $scope.$broadcast('scroll.refreshComplete');
     ProcessBarDelegate.end();
     FlashBarDelegate.show();
+
   });
   //刷新
   $scope.doRefresh = function() {
@@ -81,4 +82,5 @@ angular.module('DoubanTodoApp')
       alert(error);
     });
   }
+
 })

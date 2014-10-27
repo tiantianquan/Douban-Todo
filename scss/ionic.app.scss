@@ -61,6 +61,7 @@ ion-nav-back-button {
 .search-item-simple {
   padding-right: 34px;
 }
+//弹出菜单
 .popup-menu-modal {
   top: 40%;
   right: 20%;
@@ -70,45 +71,43 @@ ion-nav-back-button {
   min-height: 0;
   width: 60%;
 }
-
+//进度条
 .process-bar {
   height: 5px;
-  background-color: lighten(blue,20%);
+  background-color: lighten(blue, 20%);
   position: absolute;
   overflow: hidden;
-  top:0;
+  top: 0;
   left: 0;
-  opacity:0.5;
+  opacity: 0.5;
   z-index: 10;
 }
 .process-bar.process-bar-start {
   width: 0px;
   transition: width 2s linear;
 }
-
 .process-bar.process-bar-end {
   transition: width 0.5s linear;
 }
-
-.flash-bar{
+//下拉提示框
+.flash-bar {
   height: 30px;
-  background-color: lighten(#999,20%);
+  background-color: lighten(#999, 20%);
   position: absolute;
   overflow: hidden;
   left: 0;
-  opacity:0.5;
+  opacity: 0.5;
   transition: top 0.5s;
   z-index: 2;
 }
-
-.flash-bar p{
+.flash-bar p {
   text-align: center;
   font-weight: 500;
-  opacity:1;
+  opacity: 1;
 }
-
-.img-convert{
-  width:80px;
+//圆形图标
+.img-convert-small {
+  width: 80px;
   height: 80px;
   position: absolute;
   top: 10px;
@@ -117,9 +116,31 @@ ion-nav-back-button {
   background-color: #fff;
   overflow: hidden;
 }
-
-.img-convert img{
+.img-convert-small img {
   display: block;
-  max-width:80px;
+  max-width: 80px;
   max-height: 80px;
+}
+
+.img-convert-full {
+  position: relative;
+  margin: 30px auto 30px;
+  max-width: 70%;
+  border-radius: 50%;
+  padding-bottom: 70%;
+  height: 0;
+  overflow: hidden;
+  transition: width 1s,margin-left 1s,padding-bottom 1s;
+}
+
+.img-convert-full img {
+  margin-top: -5%;
+  margin-left: -5%;
+  width: 110%;
+}
+
+.svg-wraper{
+  position: absolute;
+  top:0;
+  left: 0;
 }

@@ -6,6 +6,7 @@ angular.module('DoubanTodoApp')
   $scope.searchList;
 
   $scope.init = function() {
+    
     $timeout(function() {
       searchInput = $('.search-item-input-inset input');
       searchInput.focus(function() {
