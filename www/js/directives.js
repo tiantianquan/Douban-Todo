@@ -182,3 +182,13 @@ angular.module('DoubanTodoApp')
     }
   }
 })
+
+.directive('processCircle', function($timeout) {
+  return {
+    restrice: 'AE',
+    link: function(scope, element, attr) {
+
+
+    }
+  }
+})

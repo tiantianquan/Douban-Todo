@@ -46,6 +46,7 @@ angular.module('DoubanTodoApp')
       return toDoItem.doubanData.id == id
     })[0];
     $scope.modal.show();
+    d3Fn();
   };
 
   //popupMenu
@@ -84,3 +85,78 @@ angular.module('DoubanTodoApp')
   }
 
 })
+
+
+//d3
+var d3Fn = function() {
+  var el = document.querySelector('.img-convert-full');
+  var width = el.offsetWidth,
+    height = el.offsetHeight,
+    radius = Math.min(width, height),
+    radii = width / 2,
+    outerRadii = radii + 10,
+    τ = 2 * Math.PI,
+    endAngle = 0*2 * Math.PI;
+
+  var circleBar = d3.select('.svg-wraper');
+  var svg = circleBar.append('svg')
+    .attr('width', outerRadii * 2)
+    .attr('height', outerRadii * 2)
+    // .attr('top', el.offsetTop)
+    // .attr('left',el.offsetLeft)
+    .append('g')
+    .attr('transform', 'translate(' + outerRadii + ',' + outerRadii + ')');
+
+
+  var arc = d3.svg.arc()
+    .innerRadius(radii)
+    .outerRadius(outerRadii)
+    .startAngle(0);
+
+  // Add the background arc, from 0 to 100% (τ).
+  var background = svg.append('path')
+    .datum({
+      endAngle: τ
+    })
+    .style('fill', '#fff')
+    .attr('d', arc);
+
+  // Add the foreground arc in orange, currently showing 12.7%.
+  var foreground = svg.append('path')
+    .datum({
+      endAngle: endAngle
+    })
+    .style('fill', '#82c2e1')
+    .attr('d', arc);
+
+  // setInterval(function() {
+  //   foreground.transition()
+  //     .duration(750)
+  //     .call(arcTween, Math.random() * τ);
+  // }, 1500);
+
+  // function arcTween(transition, newAngle) {
+  //   transition.attrTween('d', function(d) {
+  //     var interpolate = d3.interpolate(d.endAngle, newAngle);
+  //     return function(t) {
+  //       d.endAngle = interpolate(t);
+  //       return arc(d);
+  //     };
+  //   });
+  // }
+
+  setTimeout(function() {
+    foreground.transition()
+      .duration(2000)
+      .call(function(transition, newAngle) {
+        transition.attrTween('d', function(d) {
+          var interpolate = d3.interpolate(d.endAngle, newAngle);
+          return function(t) {
+            d.endAngle = interpolate(t);
+            return arc(d);
+          };
+        });
+      }, 2 * Math.PI);
+  }, 2000);
+
+}
