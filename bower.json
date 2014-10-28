@@ -3,6 +3,9 @@
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.0.0-beta.13",
-    "d3":"3.4.13"
+    "d3": "3.4.13"
+  },
+  "dependencies": {
+    "jQuery": "~2.1.1"
   }
 }
