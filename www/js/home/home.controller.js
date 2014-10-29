@@ -46,7 +46,11 @@ angular.module('DoubanTodoApp')
       return toDoItem.doubanData.id == id
     })[0];
     $scope.modal.show();
-    d3Fn();
+
+    $scope.svgEl = angular.element('svg');
+    if ($scope.svgEl.length === 0) {
+      d3Fn();
+    }
   };
 
   //popupMenu
@@ -90,20 +94,19 @@ angular.module('DoubanTodoApp')
 //d3
 var d3Fn = function() {
   var el = document.querySelector('.img-convert-full');
-  var width = el.offsetWidth,
+  var midWidth = 20,
+    width = el.offsetWidth,
     height = el.offsetHeight,
     radius = Math.min(width, height),
-    radii = width / 2,
-    outerRadii = radii + 10,
+    radii = (width - midWidth) / 2,
+    outerRadii = width / 2,
     τ = 2 * Math.PI,
-    endAngle = 0*2 * Math.PI;
+    endAngle = 0 * 2 * Math.PI;
 
   var circleBar = d3.select('.svg-wraper');
   var svg = circleBar.append('svg')
     .attr('width', outerRadii * 2)
     .attr('height', outerRadii * 2)
-    // .attr('top', el.offsetTop)
-    // .attr('left',el.offsetLeft)
     .append('g')
     .attr('transform', 'translate(' + outerRadii + ',' + outerRadii + ')');
 

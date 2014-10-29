@@ -4,6 +4,8 @@ angular.module('DoubanTodoApp')
 
   $scope.closeModal = function() {
     $scope.modal.hide();
+    $scope.svgEl = angular.element('svg');
+    $scope.svgEl.remove();
   };
   //Cleanup the modal when we're done with it!
   $scope.$on('$destroy', function() {

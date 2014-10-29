@@ -1,3 +1,4 @@
+@charset "utf-8";
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -129,8 +130,9 @@ ion-nav-back-button {
   border-radius: 50%;
   padding-bottom: 70%;
   height: 0;
-  overflow: hidden;
+  // overflow: hidden;
   transition: width 1s,margin-left 1s,padding-bottom 1s;
+  background-position: center center;
 }
 
 .img-convert-full img {
@@ -140,7 +142,4 @@ ion-nav-back-button {
 }
 
 .svg-wraper{
-  position: absolute;
-  top:-10px;
-  left: 38px;
 }
