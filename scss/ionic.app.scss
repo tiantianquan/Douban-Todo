@@ -1,4 +1,4 @@
-@charset "utf-8";
+@charset"utf-8";
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -106,7 +106,7 @@ ion-nav-back-button {
   font-weight: 500;
   opacity: 1;
 }
-//圆形图标
+//注释:小圆形图标
 .img-convert-small {
   width: 80px;
   height: 80px;
@@ -122,24 +122,27 @@ ion-nav-back-button {
   max-width: 80px;
   max-height: 80px;
 }
-
+//--
 .img-convert-full {
   position: relative;
-  margin: 30px auto 30px;
+  // top: 30px;
+  margin: 0 auto 30px;
   max-width: 70%;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
   padding-bottom: 70%;
   height: 0;
   // overflow: hidden;
-  transition: width 1s,margin-left 1s,padding-bottom 1s;
+  // transition: width 1s, margin-left 1s, padding-bottom 1s;
   background-position: center center;
+  background-size: cover;
+  // box-shadow: 50px 50px 0 #f73b4a;
 }
-
-.img-convert-full img {
-  margin-top: -5%;
-  margin-left: -5%;
-  width: 110%;
+//占位Div
+.box-pos {
+  width: 100%;
+  height: 30px;
 }
-
-.svg-wraper{
-}
+// .svg-wraper{
+//   overflow: visible !important;
+// }

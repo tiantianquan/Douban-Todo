@@ -94,19 +94,25 @@ angular.module('DoubanTodoApp')
 //d3
 var d3Fn = function() {
   var el = document.querySelector('.img-convert-full');
-  var midWidth = 20,
-    width = el.offsetWidth,
+  //图片宽高
+  var width = el.offsetWidth,
     height = el.offsetHeight,
-    radius = Math.min(width, height),
-    radii = (width - midWidth) / 2,
-    outerRadii = width / 2,
-    τ = 2 * Math.PI,
-    endAngle = 0 * 2 * Math.PI;
+    //内半径-外半径
+    midWidth = 20,
+    //内半径
+    radii = width / 2,
+    //外半径
+    outerRadii = (width + 2 * midWidth) / 2,
+    //360°角
+    fullAng = 2 * Math.PI,
+    startEndAngle = 0 * fullAng;
 
-  var circleBar = d3.select('.svg-wraper');
-  var svg = circleBar.append('svg')
+  var _el = d3.select('.img-convert-full');
+  var svg = _el.append('svg')
     .attr('width', outerRadii * 2)
     .attr('height', outerRadii * 2)
+    //调整外边距 ,使两个div中心重合
+    .attr('style', 'margin:' + (-midWidth) + 'px')
     .append('g')
     .attr('transform', 'translate(' + outerRadii + ',' + outerRadii + ')');
 
@@ -117,19 +123,19 @@ var d3Fn = function() {
     .startAngle(0);
 
   // Add the background arc, from 0 to 100% (τ).
-  var background = svg.append('path')
-    .datum({
-      endAngle: τ
-    })
-    .style('fill', '#fff')
-    .attr('d', arc);
+  // var background = svg.append('path')
+  //   .datum({
+  //     endAngle: τ
+  //   })
+  //   .style('fill', '#fff')
+  //   .attr('d', arc);
 
   // Add the foreground arc in orange, currently showing 12.7%.
   var foreground = svg.append('path')
     .datum({
-      endAngle: endAngle
+      endAngle: startEndAngle
     })
-    .style('fill', '#82c2e1')
+    .style('fill', '#4fbcf7')
     .attr('d', arc);
 
   // setInterval(function() {
@@ -159,7 +165,7 @@ var d3Fn = function() {
             return arc(d);
           };
         });
-      }, 2 * Math.PI);
+      }, fullAng);
   }, 2000);
 
 }
