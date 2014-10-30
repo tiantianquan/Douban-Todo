@@ -50,7 +50,7 @@ angular.module('DoubanTodoApp')
     $scope.circleProcessBar
       .midWidth(20)
       .startAngle(0)
-      .endAngle(1.5 * Math.PI)
+      .endAngle(.1*2 * Math.PI)
       .start(2000);
   };
 

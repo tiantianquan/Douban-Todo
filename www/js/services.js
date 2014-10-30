@@ -170,7 +170,7 @@ angular.module('DoubanTodoApp')
         .attr('transform', 'translate(' + outerRadii + ',' + outerRadii + ')');
 
       //定义弧形
-      var arc = this._arc = d3.svg.arc()
+      var arc = this._arc = this._arc || d3.svg.arc()
         .innerRadius(radii)
         .outerRadius(outerRadii)
         .startAngle(0);
@@ -180,6 +180,7 @@ angular.module('DoubanTodoApp')
           endAngle: this._stratAngle
         })
         .style('fill', '#4fbcf7')
+        //设置attr datum会作为参数传入arc
         .attr('d', arc);
     }
 
@@ -209,27 +210,37 @@ angular.module('DoubanTodoApp')
     }
 
     CircleProcessBar.prototype.start = function() {
-      this.boot(2000, 500);
+      this.boot(500, 1000, .1*2*Math.PI);
     }
 
     CircleProcessBar.prototype.end = function() {
-      this.boot(100, 0);
+      // this.boot(100, 0);
+      this._frontBar
+        .datum({
+          endAngle: 0
+        })
+        .attr('d', this._arc);
     }
 
-    CircleProcessBar.prototype.boot = function(dur, timeout) {
+    CircleProcessBar.prototype.boot = function(dur, timeout, midLong) {
       var self = this;
-      setTimeout(function() {
-        self._frontBar.transition()
-          .duration(dur)
-          .call(function(transition, newAngle) {
-            transition.attrTween('d', function(d) {
-              var interpolate = d3.interpolate(d.endAngle, newAngle);
-              return function(t) {
-                d.endAngle = interpolate(t);
-                return self._arc(d);
-              };
-            });
-          }, self._endAngle);
+      setInterval(function() {
+
+        var callback = function(transition, newAngle) {
+          transition.attrTween('d', function(d) {
+            var interpolate = d3.interpolate(d.endAngle, newAngle);
+            return function(t) {
+             d.endAngle = interpolate(t);
+              return self._arc(d); 
+            };
+          })
+        };
+
+        // self._frontBar.transition().duration(dur).call(callback, self._endAngle);
+        var frontbarTs = self._frontBar.transition().duration(dur)
+        callback(frontbarTs, self._endAngle);
+        self._endAngle += midLong;
+
       }, timeout);
     }
 
