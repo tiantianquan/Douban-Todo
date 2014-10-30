@@ -1,11 +1,10 @@
 angular.module('DoubanTodoApp')
 
-.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup, ProcessBarDelegate, FlashBarDelegate, TodoItem, DoubanApi) {
+.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup, ProcessBarDelegate, FlashBarDelegate, TodoItem, DoubanApi, CircleProcessBar) {
   $scope.$on('initEnd', function() {
     $scope.$broadcast('scroll.refreshComplete');
     ProcessBarDelegate.end();
     FlashBarDelegate.show();
-
   });
   //刷新
   $scope.doRefresh = function() {
@@ -47,10 +46,12 @@ angular.module('DoubanTodoApp')
     })[0];
     $scope.modal.show();
 
-    $scope.svgEl = angular.element('svg');
-    if ($scope.svgEl.length === 0) {
-      d3Fn();
-    }
+    $scope.circleProcessBar = $scope.circleProcessBar || new CircleProcessBar('.img-convert-full');
+    $scope.circleProcessBar
+      .midWidth(20)
+      .startAngle(0)
+      .endAngle(1.5 * Math.PI)
+      .start(2000);
   };
 
   //popupMenu
@@ -89,83 +90,3 @@ angular.module('DoubanTodoApp')
   }
 
 })
-
-
-//d3
-var d3Fn = function() {
-  var el = document.querySelector('.img-convert-full');
-  //图片宽高
-  var width = el.offsetWidth,
-    height = el.offsetHeight,
-    //内半径-外半径
-    midWidth = 20,
-    //内半径
-    radii = width / 2,
-    //外半径
-    outerRadii = (width + 2 * midWidth) / 2,
-    //360°角
-    fullAng = 2 * Math.PI,
-    startEndAngle = 0 * fullAng;
-
-  var _el = d3.select('.img-convert-full');
-  var svg = _el.append('svg')
-    .attr('width', outerRadii * 2)
-    .attr('height', outerRadii * 2)
-    //调整外边距 ,使两个div中心重合
-    .attr('style', 'margin:' + (-midWidth) + 'px')
-    .append('g')
-    .attr('transform', 'translate(' + outerRadii + ',' + outerRadii + ')');
-
-
-  var arc = d3.svg.arc()
-    .innerRadius(radii)
-    .outerRadius(outerRadii)
-    .startAngle(0);
-
-  // Add the background arc, from 0 to 100% (τ).
-  // var background = svg.append('path')
-  //   .datum({
-  //     endAngle: τ
-  //   })
-  //   .style('fill', '#fff')
-  //   .attr('d', arc);
-
-  // Add the foreground arc in orange, currently showing 12.7%.
-  var foreground = svg.append('path')
-    .datum({
-      endAngle: startEndAngle
-    })
-    .style('fill', '#4fbcf7')
-    .attr('d', arc);
-
-  // setInterval(function() {
-  //   foreground.transition()
-  //     .duration(750)
-  //     .call(arcTween, Math.random() * τ);
-  // }, 1500);
-
-  // function arcTween(transition, newAngle) {
-  //   transition.attrTween('d', function(d) {
-  //     var interpolate = d3.interpolate(d.endAngle, newAngle);
-  //     return function(t) {
-  //       d.endAngle = interpolate(t);
-  //       return arc(d);
-  //     };
-  //   });
-  // }
-
-  setTimeout(function() {
-    foreground.transition()
-      .duration(2000)
-      .call(function(transition, newAngle) {
-        transition.attrTween('d', function(d) {
-          var interpolate = d3.interpolate(d.endAngle, newAngle);
-          return function(t) {
-            d.endAngle = interpolate(t);
-            return arc(d);
-          };
-        });
-      }, fullAng);
-  }, 2000);
-
-}

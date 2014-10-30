@@ -85,9 +85,11 @@ ion-nav-back-button {
 }
 .process-bar.process-bar-start {
   width: 0px;
+  -webkit-transition: width 2s linear;
   transition: width 2s linear;
 }
 .process-bar.process-bar-end {
+  -webkit-transition: width 0.5s linear;
   transition: width 0.5s linear;
 }
 //下拉提示框
@@ -98,6 +100,7 @@ ion-nav-back-button {
   overflow: hidden;
   left: 0;
   opacity: 0.5;
+  -webkit-transition: top 0.5s;
   transition: top 0.5s;
   z-index: 2;
 }
