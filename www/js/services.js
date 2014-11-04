@@ -210,7 +210,7 @@ angular.module('DoubanTodoApp')
     }
 
     CircleProcessBar.prototype.start = function() {
-      this.boot(500, 1000, .1*2*Math.PI);
+      this.boot(2000);
     }
 
     CircleProcessBar.prototype.end = function() {
@@ -222,26 +222,23 @@ angular.module('DoubanTodoApp')
         .attr('d', this._arc);
     }
 
-    CircleProcessBar.prototype.boot = function(dur, timeout, midLong) {
+    CircleProcessBar.prototype.boot = function(dur) {
       var self = this;
-      setInterval(function() {
 
-        var callback = function(transition, newAngle) {
-          transition.attrTween('d', function(d) {
-            var interpolate = d3.interpolate(d.endAngle, newAngle);
-            return function(t) {
-             d.endAngle = interpolate(t);
-              return self._arc(d); 
-            };
-          })
-        };
 
-        // self._frontBar.transition().duration(dur).call(callback, self._endAngle);
-        var frontbarTs = self._frontBar.transition().duration(dur)
-        callback(frontbarTs, self._endAngle);
-        self._endAngle += midLong;
+      var callback = function(transition, newAngle) {
+        transition.attrTween('d', function(d) {
+          var interpolate = d3.interpolate(d.endAngle, newAngle);
+          return function(t) {
+            d.endAngle = interpolate(t);
+            return self._arc(d);
+          };
+        })
+      };
 
-      }, timeout);
+      // self._frontBar.transition().duration(dur).call(callback, self._endAngle);
+      var frontbarTs = self._frontBar.transition().duration(dur)
+      callback(frontbarTs, self._endAngle);
     }
 
     return CircleProcessBar;
