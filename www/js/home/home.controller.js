@@ -1,6 +1,6 @@
 angular.module('DoubanTodoApp')
 
-.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup, ProcessBarDelegate, FlashBarDelegate, TodoItem, DoubanApi, CircleProcessBar) {
+.controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup, ProcessBarDelegate, FlashBarDelegate, TodoItem, DoubanApi, CircleProcessBarDelegate) {
   $scope.$on('initEnd', function() {
     $scope.$broadcast('scroll.refreshComplete');
     ProcessBarDelegate.end();
@@ -46,12 +46,13 @@ angular.module('DoubanTodoApp')
     })[0];
     $scope.modal.show();
 
-    $scope.circleProcessBar = $scope.circleProcessBar || new CircleProcessBar('.img-convert-full');
+    $scope.circleProcessBar = $scope.circleProcessBar || new CircleProcessBarDelegate('.img-convert-full');
     $scope.circleProcessBar
-      .midWidth(20)
-      .startAngle(0)
-      .endAngle(2 * Math.PI)
-      .start();
+      .midWidth(10)
+      .startTime($scope.todoItem.get('startTime'))
+      .endTime($scope.todoItem.get('endTime'))
+      .initBar()
+      .boot(100);
   };
 
   //popupMenu
