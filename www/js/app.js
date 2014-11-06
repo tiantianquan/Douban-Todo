@@ -61,6 +61,16 @@ angular.module('DoubanTodoApp', ['ionic','CircleProcessBar'])
     }
   })
 
+  .state('itemEdit',{
+    url:'/item-edit',
+    views:{
+      'home':{
+        templateUrl: 'js/itemEdit/itemEdit.template.html',
+        controller:'ItemEditCtrl'
+      }
+    }
+  })
+
   $urlRouterProvider.otherwise('/home');
 
 })

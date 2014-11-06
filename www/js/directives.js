@@ -68,7 +68,7 @@ angular.module('DoubanTodoApp')
     restrict: 'A',
     link: function(scope, element, attr) {
       var ionNavBar = $('ion-nav-bar');
-      if (ionNavBar.count = 0)
+      if (ionNavBar.length === 0)
         return;
       ionNavBar.children('.title').hide();
       ionNavBar.append('<div class="item-input-inset search-item-input-inset">' +
@@ -183,12 +183,36 @@ angular.module('DoubanTodoApp')
   }
 })
 
-.directive('processCircle', function($timeout) {
+.directive('convertDateString', function() {
   return {
-    restrice: 'AE',
-    link: function(scope, element, attr) {
-      
-
+    require: '?ngModel',
+    link: function(scope, ele, attrs, ngModel) {
+      if (!ngModel) return;
+      ngModel.$parsers.unshift(function(viewValue) {
+        var dateValue = new Date(viewValue);
+        if (isNaN(dateValue.getTime())) {
+          ngModel.$setValidity('stringToDate', false);
+          return undefined;
+        } else {
+          ngModel.$setValidity('stringToDate', true);
+          dateValue.setHours(0);
+          return dateValue;
+        }
+      })
+      ngModel.$formatters.unshift(function(modelValue) {
+        if (angular.isDate(modelValue)) {
+          var list = modelValue.toLocaleDateString().split('/');
+          list.forEach(function(i,index) {
+            if (i.length < 2) {
+              list[index] = '0'+i;
+            }
+          })
+          var stringValue = list.join('-');
+          return stringValue;
+        } else {
+          return '';
+        }
+      })
     }
   }
 })

@@ -1,0 +1,47 @@
+<ion-view title="Edit" ng-init="init()">
+  <ion-content>
+    <div class="item item-thumbnail-left app-item-simple">
+
+      <img src={{addItem.doubanAPIData.image}}>
+      <div class="description">
+        <h2>{{addItem.doubanAPIData.title}}</h2>
+        <p>{{addItem.doubanAPIData.author[0].name}}</p>
+      </div>
+    </div>
+    <div class="list">
+      <form name="timeForm" novalidate ng-submit="signupForm()">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Start Time</span>
+          <input type="date" ng-model="addItem.startTime" name="startTime" convert-date-string required>
+
+          <div class="error" ng-show="timeForm.startTime.$dirty && timeForm.startTime.$invalid">
+            <small ng-show="timeForm.startTime.$error.stringToDate">请填写日期</small>
+          </div>
+
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">End Time</span>
+          <input type="date" ng-model="addItem.endTime" name="endTime" convert-date-string required>
+
+          <div class="error" ng-show="timeForm.endTime.$dirty && timeForm.endTime.$invalid">
+            <small ng-show="timeForm.endTime.$error.stringToDate">请填写日期</small>
+          </div>
+
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Summary</span>
+          <input type="text" placeholder="..." name="summary" ng-model="addItem.summary" ng-maxlength="200">
+
+          <div class="error" ng-show="timeForm.summary.$dirty && timeForm.summary.$invalid">
+            <small ng-show="timeForm.summary.$error.maxlength">最大长度200</small>
+          </div>
+
+        </label>
+
+        <button type="submit" ng-disabled="timeForm.$invalid" class="button">Submit</button>
+      </form>
+
+    </div>
+  </ion-content>
+</ion-view>

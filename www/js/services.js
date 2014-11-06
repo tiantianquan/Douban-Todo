@@ -4,13 +4,19 @@ angular.module('DoubanTodoApp')
 .factory('TodoItem', function() {
   // 创建AV.Object子类.
   var AV_TodoItem = AV.Object.extend('TodoItem');
+  var _currentEditItem;
 
   return {
-    Add: function(doubanItem, fnSuccess, fnError) {
+    Add: function(item, fnSuccess, fnError) {
       var todoItem = new AV_TodoItem();
-      todoItem.set('doubanItemID', parseInt(doubanItem.id));
-      todoItem.set('doubanAPIData', doubanItem);
+      todoItem.set('doubanItemID', parseInt(item.doubanAPIData.id));
+      //avos 不允许$打头的属性
+      delete item.doubanAPIData['$$hashKey'];
+      todoItem.set('doubanAPIData', item.doubanAPIData);
       todoItem.set('user', AV.User.current());
+      todoItem.set('startTime', item.startTime);
+      todoItem.set('endTime',item.endTime);
+      todoItem.set('summary',item.summary);
       todoItem.save(null, {
         success: fnSuccess,
         error: fnError
@@ -40,12 +46,14 @@ angular.module('DoubanTodoApp')
         }, function(data, error) {
           alert(error);
         });
-
       })
     },
+    CurrentEditItem: function() {
+      if (arguments.length === 0)
+        return _currentEditItem;
+      _currentEditItem = arguments[0];
+    },
   }
-
-
 })
 
 //doubanAPI测试
@@ -124,6 +132,11 @@ angular.module('DoubanTodoApp')
       }, 1);
     },
     barText: ''
+  }
+})
+
+.factory('Helper',function(){
+  return{
   }
 })
 
