@@ -3,12 +3,10 @@ angular.module('DoubanTodoApp')
 .controller('HomeCtrl', function($scope, $ionicModal, $ionicPopup, ProcessBarDelegate, FlashBarDelegate, TodoItem, DoubanApi, CircleProcessBarDelegate) {
   $scope.$on('initEnd', function() {
     $scope.$broadcast('scroll.refreshComplete');
-    ProcessBarDelegate.end();
     FlashBarDelegate.show();
   });
   //刷新
   $scope.doRefresh = function() {
-    ProcessBarDelegate.start();
     $scope.init();
   };
 
@@ -30,7 +28,6 @@ angular.module('DoubanTodoApp')
         $scope.$broadcast('initEnd');
       });
     })
-
   }
 
   //从下方弹出item页面

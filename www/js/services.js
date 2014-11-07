@@ -31,7 +31,7 @@ angular.module('DoubanTodoApp')
     },
     GetItemById: function(todoItem, fnSuccess, fnError) {
       var query = new AV.Query(AV_TodoItem);
-      query.get(todoItem.objectId, {
+      query.get(todoItem.id, {
         success: fnSuccess,
         error: fnError
       });
@@ -137,6 +137,21 @@ angular.module('DoubanTodoApp')
 
 .factory('Helper',function(){
   return{
+  }
+})
+
+.factory('SearchPageCache', function(){
+  var _pageContent;
+  return{
+    set:function(pageContent){
+      _pageContent = pageContent;
+    },
+    get:function(){
+      return _pageContent;
+    },
+    clean:function(){
+      _pageContent = null;
+    }
   }
 })
 

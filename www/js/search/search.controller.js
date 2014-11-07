@@ -1,12 +1,14 @@
 angular.module('DoubanTodoApp')
 
-.controller('SearchCtrl', function($scope, $timeout,$state,ProcessBarDelegate, TodoItem, DoubanApi) {
+.controller('SearchCtrl', function($scope, $timeout, $state, ProcessBarDelegate, TodoItem, DoubanApi, SearchPageCache) {
   //设置搜索框焦点 bug:ios 下只有第一次找到焦点
   var searchInput;
   $scope.searchList;
 
   $scope.init = function() {
-    
+    if (SearchPageCache.get())
+      $scope.searchList = SearchPageCache.get();
+
     $timeout(function() {
       searchInput = $('.search-item-input-inset input');
       searchInput.focus(function() {
@@ -14,28 +16,24 @@ angular.module('DoubanTodoApp')
         $('ion-content').addClass('search-blur');
       })
       searchInput.blur(function() {
-        
+
         $('ion-nav-back-button').show('fast');
         $('ion-content').removeClass('search-blur');
         //如果搜索框有值则不进行搜素
         if (!!searchInput.val()) {
-          ProcessBarDelegate.start();
           DoubanApi.MusicSearch(searchInput.val(), 30, function(data) {
             $scope.searchList = data.musics;
-            ProcessBarDelegate.end();
           })
         }
       })
-      searchInput[0].focus();
+
+      if (!SearchPageCache.get())
+        searchInput[0].focus();
     }, 500);
   }
 
   $scope.addToTodoList = function(searchItem) {
-    // TodoItem.Add(searchItem, function(todoItem) {
-
-    // }, function(todoItem, error) {
-    //   console.log(error, searchItem);
-    // });
+    SearchPageCache.set($scope.searchList);
     TodoItem.CurrentEditItem(searchItem);
     $state.go('itemEdit');
   }

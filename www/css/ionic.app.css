@@ -9001,3 +9001,8 @@ ion-nav-back-button {
 .box-pos {
   width: 100%;
   height: 30px; }
+
+div.bottom-button {
+  position: absolute;
+  bottom: 0;
+  width: 100%; }

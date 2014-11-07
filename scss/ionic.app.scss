@@ -146,6 +146,9 @@ ion-nav-back-button {
   width: 100%;
   height: 30px;
 }
-// .svg-wraper{
-//   overflow: visible !important;
-// }
+
+div.bottom-button{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
