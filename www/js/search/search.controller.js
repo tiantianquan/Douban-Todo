@@ -6,8 +6,9 @@ angular.module('DoubanTodoApp')
   $scope.searchList;
 
   $scope.init = function() {
-    if (SearchPageCache.get())
-      $scope.searchList = SearchPageCache.get();
+    if (SearchPageCache.get()){
+      $scope.searchList = SearchPageCache.get().content;
+    }
 
     $timeout(function() {
       searchInput = $('.search-item-input-inset input');
@@ -29,11 +30,16 @@ angular.module('DoubanTodoApp')
 
       if (!SearchPageCache.get())
         searchInput[0].focus();
+      else 
+        searchInput.val(SearchPageCache.get().searchtext);
     }, 500);
   }
 
   $scope.addToTodoList = function(searchItem) {
-    SearchPageCache.set($scope.searchList);
+    SearchPageCache.set({
+      searchtext:searchInput.val(),
+      content:$scope.searchList
+    });
     TodoItem.CurrentEditItem(searchItem);
     $state.go('itemEdit');
   }

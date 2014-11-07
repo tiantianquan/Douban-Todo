@@ -85,7 +85,20 @@ angular.module('CircleProcessBar', [])
           //设置attr datum会作为参数传入arc
           .attr('d', arc);
 
-          return this;
+        // var timeScale = this._timeScale = d3.scale
+        //   .linear()
+        //   .domain([this._startTime.getTime(), this._endTime.getTime()])
+        //   .range([2 * Math.PI, 0])
+        // var timeText = this._timeText = this._timeText === undefined ? svg.append('text') : this._timeText;
+        // this._timeText.datum({
+        //     endAngle: timeScale(Date.now())
+        //   })
+        //   .style('color', '#000')
+        //   //设置attr datum会作为参数传入arc
+        //   .attr('d', arc)
+        //   .text('tiantianquan');
+
+        return this;
       }
 
       //宽度
@@ -143,7 +156,7 @@ angular.module('CircleProcessBar', [])
         var self = this;
         this._interval = setInterval(function() {
           self._endAngle = toolFn.unpassTimePercent(self._startTime, self._endTime) * 2 * Math.PI;
-          if (self._endAngle == 0){
+          if (self._endAngle == 0) {
             clearInterval(self._interval);
           }
           var callback = function(transition, newAngle) {
